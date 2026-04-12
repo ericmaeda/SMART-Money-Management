@@ -12,6 +12,12 @@ enum TransactionType {
   EXPENSE
 }
 
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
 model User {
   id          String   @id @default(cuid())
   email       String   @unique
@@ -66,6 +72,7 @@ model Transaction {
 
   amount        Int
   type          TransactionType
+  status        TransactionStatus
 
   description   String?
   date          DateTime
