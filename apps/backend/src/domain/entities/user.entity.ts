@@ -32,6 +32,10 @@ export class UserEntity {
         return this._name;
     }
 
+    get password(): string {
+        return this._password;
+    }
+
     get createdAt(): Date {
         return this._createdAt;
     }
@@ -51,23 +55,23 @@ export class UserEntity {
         };
     }
 
-  // Factory for NEW users
-  static create(props: CreateUserProps, id: string, createdAt: Date): UserEntity {
-    if (!props.email || !props.email.includes('@')) {
-      throw new Error('Invalid email');
-    }
-    if (!props.name || props.name.trim().length === 0) {
-      throw new Error('Name is required');
-    }
+    // Factory for NEW users
+    static create(props: CreateUserProps, id: string, createdAt: Date): UserEntity {
+        if (!props.email || !props.email.includes('@')) {
+        throw new Error('Invalid email');
+        }
+        if (!props.name || props.name.trim().length === 0) {
+        throw new Error('Name is required');
+        }
 
-    return new UserEntity(
-      id,
-      props.email.toLowerCase().trim(),
-      props.name.trim(),
-      props.password,
-      createdAt,
-    );
-  }
+        return new UserEntity(
+        id,
+        props.email.toLowerCase().trim(),
+        props.name.trim(),
+        props.password,
+        createdAt,
+        );
+    }
 
     // Factory for EXISTING users (from DB)
     static reconstitute(props: {
@@ -78,11 +82,11 @@ export class UserEntity {
         createdAt: Date;
     }): UserEntity {
         return new UserEntity(
-        props.id,
-        props.email,
-        props.name,
-        props.password,
-        props.createdAt,
+            props.id,
+            props.email,
+            props.name,
+            props.password,
+            props.createdAt,
         );
     }
 }

@@ -1,6 +1,6 @@
-import { UserEntity, CreateUserProps } from "../entities/user.entity";
+import { UserEntity } from "../entities/user.entity";
 
-export interface IUpdateUserProps {
+export interface UpdateUserProps {
   name?: string;
   password?: string;
 }
@@ -8,8 +8,9 @@ export interface IUpdateUserProps {
 export interface IUserRepository {
   findById(id: string): Promise<UserEntity | null>;
   findByEmail(email: string): Promise<UserEntity | null>;
-  save(props: CreateUserProps, id: string, createdAt: Date): Promise<UserEntity>;
-  update(id: string, data: IUpdateUserProps): Promise<UserEntity>;
+  save(entity: UserEntity): Promise<UserEntity>;
+  update(id: string, data: UpdateUserProps): Promise<UserEntity>;
+  delete(id: string): Promise<void>;
 }
 
 export const USER_REPOSITORY = Symbol('UserRepository');

@@ -5,15 +5,15 @@ export enum BudgetStatus {
 }
 
 export interface CreateBudgetProps {
-    userId: string;
-    categoryId: string;
+    user_id: string;
+    category_id: string;
     limitAmount: number;
     month: string; // format "YYYY-MM"
 }
 
 export interface BudgetPublicProps {
     id: string;
-    categoryId: string;
+    category_id: string;
     limitAmount: number;
     month: string;
     createdAt: Date;
@@ -22,8 +22,8 @@ export interface BudgetPublicProps {
 export class BudgetEntity {
     constructor (
         private readonly _id: string,
-        private readonly _userId: string,
-        private readonly _categoryId: string,
+        private readonly _user_id: string,
+        private readonly _category_id: string,
         private readonly _limitAmount: number,
         private readonly _month: string,
         private readonly _createdAt: Date
@@ -34,12 +34,12 @@ export class BudgetEntity {
         return this._id;
     }
 
-    get userId() {
-        return this._userId;
+    get user_id() {
+        return this._user_id;
     }
 
-    get categoryId() {
-        return this._categoryId;
+    get category_id() {
+        return this._category_id;
     }
 
     get limitAmount() {
@@ -82,7 +82,7 @@ export class BudgetEntity {
     toPublic(): BudgetPublicProps {
         return {
             id: this._id,
-            categoryId: this._categoryId,
+            category_id: this._category_id,
             limitAmount: this._limitAmount,
             month: this._month,
             createdAt: this._createdAt
@@ -122,19 +122,19 @@ export class BudgetEntity {
 
         return new BudgetEntity(
             id,
-            props.userId,
-            props.categoryId,
+            props.user_id,
+            props.category_id,
             props.limitAmount,
             props.month,
             createdAt
         );
     }
 
-    static reconstitute(props: BudgetPublicProps & { userId: string }): BudgetEntity {
+    static reconstitute(props: BudgetPublicProps & { user_id: string }): BudgetEntity {
         return new BudgetEntity(
             props.id,
-            props.userId,
-            props.categoryId,
+            props.user_id,
+            props.category_id,
             props.limitAmount,
             props.month,
             props.createdAt

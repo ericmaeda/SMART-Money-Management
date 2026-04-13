@@ -6,7 +6,7 @@ export interface UpdateCategoryProps {
 
 export interface ICategoryRepository {
     findById(id: string): Promise<CategoryEntity | null>;
-    findAllByUserId(userId: string): Promise<CategoryEntity[]>;
+    findAllByUserId(user_id: string): Promise<CategoryEntity[]>;
     save(entity: CategoryEntity): Promise<CategoryEntity>;
     update(id: string, data: UpdateCategoryProps): Promise<CategoryEntity>;
     delete(id: string): Promise<void>;

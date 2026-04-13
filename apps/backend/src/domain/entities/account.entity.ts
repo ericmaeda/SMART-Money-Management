@@ -1,5 +1,5 @@
 export interface CreateAccountProps {
-    userId: string;
+    user_id: string;
     name: string;
 }
 
@@ -13,7 +13,7 @@ export interface AccountPublicProps {
 export class AccountEntity {
     constructor(
         private readonly _id: string,
-        private readonly _userId: string,
+        private readonly _user_id: string,
         private readonly _name: string,
         private readonly _balance: number,
         private readonly _createdAt: Date
@@ -24,8 +24,8 @@ export class AccountEntity {
         return this._id;
     }
 
-    get userId() {
-        return this._userId;
+    get user_id() {
+        return this._user_id;
     }
 
     get name() {
@@ -56,7 +56,7 @@ export class AccountEntity {
         }
         return new AccountEntity(
             this._id,
-            this._userId,
+            this._user_id,
             this._name,
             this._balance + amount,
             this._createdAt
@@ -74,7 +74,7 @@ export class AccountEntity {
 
         return new AccountEntity(
             this._id,
-            this._userId,
+            this._user_id,
             this._name,
             this._balance - amount,
             this._createdAt
@@ -99,17 +99,17 @@ export class AccountEntity {
 
         return new AccountEntity(
             id,
-            props.userId,
+            props.user_id,
             props.name.trim(),
             0,
             createdAt
         );
     }
 
-    static reconstitute(props: AccountPublicProps & { userId: string }): AccountEntity {
+    static reconstitute(props: AccountPublicProps & { user_id: string }): AccountEntity {
         return new AccountEntity(
             props.id,
-            props.userId,
+            props.user_id,
             props.name,
             props.balance,
             props.createdAt

@@ -6,7 +6,7 @@ export interface UpdateAccountProps {
 
 export interface IAccountRepository {
     findById(id: string): Promise<AccountEntity | null>;
-    findAllByUserId(userId: string): Promise<AccountEntity[]>;
+    findAllByUserId(user_id: string): Promise<AccountEntity[]>;
     save(entity: AccountEntity): Promise<AccountEntity>;
     update(id: string, data: UpdateAccountProps): Promise<AccountEntity>;
     updateBalance(id: string, newBalance: number): Promise<AccountEntity>;

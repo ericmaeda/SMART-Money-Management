@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+
+  accounts     Account[]
+  categories   Category[]
+  transactions Transaction[]
+  budgets      Budget[]
+}
+
+model Account {
+  id      String @id @default(cuid())
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  name    String
+  balance Int    @default(0)
+
+  createdAt DateTime @default(now())
+
+  transactions Transaction[]
+}
+
+model Category {
+  id      String @id @default(uuid())
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  name String
+  type TransactionType
+
+  createdAt DateTime @default(now())
+
+  transactions Transaction[]
+  budgets      Budget[]
+}
+
+model Transaction {
+  id String @id @default(cuid())
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  account    Account @relation(fields: [account_id], references: [id])
+  account_id String
+
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+
+  amount Int
+  type   TransactionType
+  status TransactionStatus
+
+  description String?
+  date        DateTime
+
+  createdAt DateTime @default(now())
+
+  @@index([user_id, date])
+}
+
+model Budget {
+  id String @id @default(cuid())
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+
+  limitAmount Int
+  month       String
+
+  createdAt DateTime @default(now())
+
+  @@unique([user_id, category_id, month])
+}

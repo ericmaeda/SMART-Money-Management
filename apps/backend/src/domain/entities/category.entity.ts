@@ -1,7 +1,7 @@
-import { TransactionType } from "./transaction.entity";
+import { TransactionType } from "../../../generated/prisma";
 
 export interface CreateCategoryProps {
-    userId: string;
+    user_id: string;
     name: string;
     type: TransactionType;
 }
@@ -16,7 +16,7 @@ export interface CategoryPublicProps {
 export class CategoryEntity {
     constructor(
         private readonly _id: string,
-        private readonly _userId: string,
+        private readonly _user_id: string,
         private readonly _name: string,
         private readonly _type: TransactionType,
         private readonly _createdAt: Date
@@ -28,8 +28,8 @@ export class CategoryEntity {
         return this._id;
     }
 
-    get userId() {
-        return this._userId;
+    get user_id() {
+        return this._user_id;
     }
 
     get name() {
@@ -78,17 +78,17 @@ export class CategoryEntity {
 
         return new CategoryEntity(
             id,
-            props.userId,
-            props.name.trim(),
+            props.user_id,
+            props.name,
             props.type,
             createdAt
         );
     }
 
-    static reconstitute(props: CategoryPublicProps & { userId: string }): CategoryEntity {
+    static reconstitute(props: CategoryPublicProps & { user_id: string }): CategoryEntity {
         return new CategoryEntity(
             props.id,
-            props.userId,
+            props.user_id,
             props.name,
             props.type,
             props.createdAt

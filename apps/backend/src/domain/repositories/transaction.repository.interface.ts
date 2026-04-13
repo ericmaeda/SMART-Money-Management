@@ -1,4 +1,5 @@
-import { TransactionEntity, CreateTransactionProps, TransactionStatus, TransactionType } from "../entities/transaction.entity";
+import { TransactionEntity } from "../entities/transaction.entity";
+import { TransactionType, TransactionStatus } from "../../../generated/prisma";
 
 export interface UpdateTransactionProps {
   description?: string;
@@ -6,8 +7,8 @@ export interface UpdateTransactionProps {
 }
 
 export interface SumByCategoryFilter {
-  userId: string;
-  categoryId: string;
+  user_id: string;
+  category_id: string;
   month: string;           // format YYYY-MM
   type: TransactionType;
   status: TransactionStatus;
@@ -16,7 +17,7 @@ export interface SumByCategoryFilter {
 export interface ITransactionRepository {   
   findById(id: string): Promise<TransactionEntity | null>;
   findAllByUserId(userId: string): Promise<TransactionEntity[]>;
-  save(entity: TransactionEntity): Promise<TransactionEntity>;
+  save(entity: TransactionEntity ): Promise<TransactionEntity>;
   update(id: string, data: UpdateTransactionProps): Promise<TransactionEntity>;
   delete(id: string): Promise<void>;
   sumByCategory(filter: SumByCategoryFilter): Promise<number>;

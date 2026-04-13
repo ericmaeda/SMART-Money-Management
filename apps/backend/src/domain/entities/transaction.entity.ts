@@ -1,18 +1,9 @@
-export enum TransactionType {
-    INCOME = 'INCOME',
-    EXPENSE = 'EXPENSE'
-}
-
-export enum TransactionStatus {
-    PENDING = 'PENDING',
-    COMPLETED = 'COMPLETED',
-    FAILED = 'FAILED'
-}
+import { TransactionType, TransactionStatus } from "../../../generated/prisma";
 
 export interface CreateTransactionProps {
-    userId: string;
-    accountId: string;
-    categoryId: string;
+    user_id: string;
+    account_id: string;
+    category_id: string;
     amount: number;
     type: TransactionType;
     date: Date;
@@ -22,9 +13,9 @@ export interface CreateTransactionProps {
 
 export interface TransactionPublicProps {
     id: string;
-    userId: string;
-    accountId: string;
-    categoryId: string;
+    user_id: string;
+    account_id: string;
+    category_id: string;
     amount: number;
     type: TransactionType;
     status: TransactionStatus;
@@ -36,9 +27,9 @@ export interface TransactionPublicProps {
 export class TransactionEntity {
     constructor(
         private readonly _id: string,
-        private readonly _userId: string,
-        private readonly _accountId: string,
-        private readonly _categoryId: string,
+        private readonly _user_id: string,
+        private readonly _account_id: string,
+        private readonly _category_id: string,
         private readonly _amount: number,
         private readonly _type: TransactionType,
         private readonly _description: string | null,
@@ -53,15 +44,15 @@ export class TransactionEntity {
     }
 
     get userId(): string {
-        return this._userId;
+        return this._user_id;
     }
 
     get accountId(): string {
-        return this._accountId;
+        return this._account_id;
     }
 
     get categoryId(): string {
-        return this._categoryId;
+        return this._category_id;
     }
 
     get amount(): number {
@@ -117,9 +108,9 @@ export class TransactionEntity {
 
         return new TransactionEntity(
             this._id,
-            this._userId,
-            this._accountId,
-            this._categoryId,
+            this._user_id,
+            this._account_id,
+            this._category_id,
             this._amount,
             this._type,
             this._description,
@@ -133,9 +124,9 @@ export class TransactionEntity {
     toPublic(): TransactionPublicProps {
         return {
             id: this._id,
-            userId: this._userId,
-            accountId: this._accountId,
-            categoryId: this._categoryId,
+            user_id: this._user_id,
+            account_id: this._account_id,
+            category_id: this._category_id,
             amount: this._amount,
             type: this._type,
             description: this._description,
@@ -152,9 +143,9 @@ export class TransactionEntity {
         }
         return new TransactionEntity(
             id,
-            props.userId,
-            props.accountId,
-            props.categoryId,
+            props.user_id,
+            props.account_id,
+            props.category_id,
             props.amount,
             props.type,
             props.description ?? null,
@@ -167,9 +158,9 @@ export class TransactionEntity {
     static reconstitute(props: TransactionPublicProps): TransactionEntity {
         return new TransactionEntity(
             props.id,
-            props.userId,
-            props.accountId,
-            props.categoryId,
+            props.user_id,
+            props.account_id,
+            props.category_id,
             props.amount,
             props.type,
             props.description,
