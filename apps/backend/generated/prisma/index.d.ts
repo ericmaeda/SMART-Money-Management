@@ -59,6 +59,15 @@ export const TransactionStatus: {
 
 export type TransactionStatus = (typeof TransactionStatus)[keyof typeof TransactionStatus]
 
+
+export const BudgetStatus: {
+  UNDER: 'UNDER',
+  WARNING: 'WARNING',
+  OVER: 'OVER'
+};
+
+export type BudgetStatus = (typeof BudgetStatus)[keyof typeof BudgetStatus]
+
 }
 
 export type TransactionType = $Enums.TransactionType
@@ -68,6 +77,10 @@ export const TransactionType: typeof $Enums.TransactionType
 export type TransactionStatus = $Enums.TransactionStatus
 
 export const TransactionStatus: typeof $Enums.TransactionStatus
+
+export type BudgetStatus = $Enums.BudgetStatus
+
+export const BudgetStatus: typeof $Enums.BudgetStatus
 
 /**
  * ##  Prisma Client ʲˢ

@@ -16,13 +16,7 @@ export class AccountRepository implements IAccountRepository {
             return null;
         }
 
-        return AccountEntity.reconstitute({
-            id: account.id,
-            user_id: account.user_id,
-            name: account.name,
-            balance: account.balance,
-            createdAt: account.createdAt
-        });
+        return this.toEntity(account);
     }
 
     async findAllByUserId(user_id: string): Promise<AccountEntity[]> {
@@ -42,13 +36,7 @@ export class AccountRepository implements IAccountRepository {
             }
         });
 
-        return AccountEntity.reconstitute({
-            id: account.id,
-            user_id: account.user_id,
-            name: account.name,
-            balance: account.balance,
-            createdAt: account.createdAt
-        });
+        return this.toEntity(account);
     }
 
     async update(id: string, data: UpdateAccountProps): Promise<AccountEntity> {
@@ -59,25 +47,18 @@ export class AccountRepository implements IAccountRepository {
             }
         });
 
-        return AccountEntity.reconstitute({
-            id: account.id,
-            user_id: account.user_id,
-            name: account.name,
-            balance: account.balance,
-            createdAt: account.createdAt
-        });
+        return this.toEntity(account);
     }
 
     async updateBalance(id: string, newBalance: number): Promise<AccountEntity> {
-        const account = await this.prisma.account.findUnique({ 
+        const account = await this.prisma.account.update({ 
             where: { id: id },
             data: {
-                balance: 
+                balance: newBalance
             } 
         });
 
-        return AccountEntity.reconstitute({
-        })
+        return this.toEntity(account);
     }
 
     async delete(id: string): Promise<void> {

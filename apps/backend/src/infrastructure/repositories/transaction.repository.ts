@@ -16,18 +16,7 @@ export class TransactionRepository implements ITransactionRepository {
             return null;
         }
 
-        return TransactionEntity.reconstitute({
-            id: transaction.id,
-            user_id: transaction.user_id,
-            account_id: transaction.account_id,
-            category_id: transaction.category_id,
-            amount: transaction.amount,
-            type: transaction.type,
-            status: transaction.status,
-            date: transaction.date,
-            description: transaction.description,
-            createdAt: transaction.createdAt
-        })
+        return this.toEntity(transaction);
     }
 
     async findAllByUserId(userId: string): Promise<TransactionEntity[]> {
@@ -55,18 +44,7 @@ export class TransactionRepository implements ITransactionRepository {
             }
         });
 
-        return TransactionEntity.reconstitute({
-            id: transaction.id,
-            user_id: transaction.user_id,
-            account_id: transaction.account_id,
-            category_id: transaction.category_id,
-            amount: transaction.amount,
-            type: transaction.type,
-            status: transaction.status,
-            date: transaction.date,
-            description: transaction.description,
-            createdAt: transaction.createdAt
-        })
+        return this.toEntity(transaction);
     }
 
     async update(id: string, data: UpdateTransactionProps): Promise<TransactionEntity> {
@@ -78,18 +56,7 @@ export class TransactionRepository implements ITransactionRepository {
             }
         })
 
-        return TransactionEntity.reconstitute({
-            id: transaction.id,
-            user_id: transaction.user_id,
-            account_id: transaction.account_id,
-            category_id: transaction.category_id,
-            amount: transaction.amount,
-            type: transaction.type,
-            status: transaction.status,
-            date: transaction.date,
-            description: transaction.description,
-            createdAt: transaction.createdAt
-        });
+        return this.toEntity(transaction);
     }
 
     async delete(id: string): Promise<void> {

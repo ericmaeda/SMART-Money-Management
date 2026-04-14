@@ -16,13 +16,7 @@ export class CategoryRepository implements ICategoryRepository {
             return null;
         }
 
-        return CategoryEntity.reconstitute({
-            id: category.id,
-            user_id: category.user_id,
-            name: category.name,
-            type: category.type,
-            createdAt: category.createdAt
-        });
+        return this.toEntity(category);
     }
 
     async findAllByUserId(user_id: string): Promise<CategoryEntity[]> {
@@ -42,13 +36,7 @@ export class CategoryRepository implements ICategoryRepository {
             }
         });
 
-        return CategoryEntity.reconstitute({
-            id: category.id,
-            user_id: category.user_id,
-            name: category.name,
-            type: category.type,
-            createdAt: category.createdAt
-        });
+        return this.toEntity(category);
     }
 
     async update(id: string, data: UpdateCategoryProps): Promise<CategoryEntity> {
@@ -59,13 +47,7 @@ export class CategoryRepository implements ICategoryRepository {
             }
          });
 
-         return CategoryEntity.reconstitute({
-            id: category.id,
-            user_id: category.user_id,
-            name: category.name,
-            type: category.type,
-            createdAt: category.createdAt
-         });
+         return this.toEntity(category);
     }
 
     async delete(id: string): Promise<void> {

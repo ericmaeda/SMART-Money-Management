@@ -16,14 +16,7 @@ export class BudgetRepository implements IBudgetRepository {
             return null;
         }
 
-        return BudgetEntity.reconstitute({
-            id: budget.id,
-            user_id: budget.user_id,
-            category_id: budget.category_id,
-            limitAmount: budget.limitAmount,
-            month: budget.month,
-            createdAt: budget.createdAt
-        });
+        return this.toEntity(budget);
     }
 
     async findAllByUserId(user_id: string): Promise<BudgetEntity[]> {
@@ -47,14 +40,7 @@ export class BudgetRepository implements IBudgetRepository {
             return null;
         }
 
-        return BudgetEntity.reconstitute({
-            id: budget.id,
-            user_id: budget.user_id,
-            category_id: budget.category_id,
-            limitAmount: budget.limitAmount,
-            month: budget.month,
-            createdAt: budget.createdAt
-        });
+        return this.toEntity(budget);
     }
 
     async save(entity: BudgetEntity): Promise<BudgetEntity> {
@@ -69,14 +55,7 @@ export class BudgetRepository implements IBudgetRepository {
             }
         });
 
-        return BudgetEntity.reconstitute({
-            id: budget.id,
-            user_id: budget.user_id,
-            category_id: budget.category_id,
-            limitAmount: budget.limitAmount,
-            month: budget.month,
-            createdAt: budget.createdAt
-        });
+        return this.toEntity(budget);
     }
 
     async update(id: string, data: UpdateBudgetProps): Promise<BudgetEntity> {
@@ -87,14 +66,7 @@ export class BudgetRepository implements IBudgetRepository {
             }
         });
 
-        return BudgetEntity.reconstitute({
-            id: budget.id,
-            user_id: budget.user_id,
-            category_id: budget.category_id,
-            limitAmount: budget.limitAmount,
-            month: budget.month,
-            createdAt: budget.createdAt
-        });
+        return this.toEntity(budget);
     }
 
     async delete(id: string): Promise<void> {

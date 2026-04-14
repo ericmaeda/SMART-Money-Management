@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { UserEntity } from "../../domain/entities/user.entity";
 import { UpdateUserProps, IUserRepository } from "../../domain/repositories/user.repository.interface";
 import { PrismaService } from "../database/prisma.service";
-import { Prisma } from "../../../generated/prisma";
+import { Prisma, User } from "../../../generated/prisma";
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -17,13 +17,7 @@ export class UserRepository implements IUserRepository {
             return null;
         }
 
-        return UserEntity.reconstitute({
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            password: user.password,
-            createdAt: user.createdAt
-        });
+        return this.toEntity(user);
     }
     
     async findByEmail(email: string): Promise<UserEntity | null> {
@@ -33,13 +27,7 @@ export class UserRepository implements IUserRepository {
             return null;
         }
 
-        return UserEntity.reconstitute({
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            password: user.password,
-            createdAt: user.createdAt
-        });
+        return this.toEntity(user);
     }
 
     async save(entity: UserEntity): Promise<UserEntity> {
@@ -53,13 +41,7 @@ export class UserRepository implements IUserRepository {
             },
         })
 
-        return UserEntity.reconstitute({
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            password: user.password,
-            createdAt: user.createdAt
-        })
+        return this.toEntity(user);
     }
 
     async update(id: string, data: UpdateUserProps): Promise<UserEntity> {
@@ -71,13 +53,7 @@ export class UserRepository implements IUserRepository {
             },
         });
 
-        return UserEntity.reconstitute({
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            password: user.password,
-            createdAt: user.createdAt
-        })
+        return this.toEntity(user);
     }
 
     async delete(id: string): Promise<void> {
@@ -90,5 +66,15 @@ export class UserRepository implements IUserRepository {
             }
             throw e;
         }
+    }
+
+    private toEntity(raw: User) {
+        return UserEntity.reconstitute({
+            id: raw.id,
+            email: raw.email,
+            name: raw.name,
+            password: raw.password,
+            createdAt: raw.createdAt
+        });
     }
 }
