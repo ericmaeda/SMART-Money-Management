@@ -67,7 +67,7 @@ export class BudgetEntity {
         if (ratio >= 0.8) {
             return BudgetStatus.WARNING;
         }
-        return BudgetStatus.OVER;
+        return BudgetStatus.UNDER;
     }
 
     isOver(totalSpent: number): boolean {

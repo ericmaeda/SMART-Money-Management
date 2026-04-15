@@ -71,7 +71,7 @@ export class CategoryEntity {
 
 
     //factories
-    static create(props: CreateCategoryProps, id: string, createdAt: Date): CreateCategoryProps {
+    static create(props: CreateCategoryProps, id: string, createdAt: Date): CategoryEntity {
         if (!props.name.trim()) {
             throw new Error('Category name cannot be empty!')
         }
