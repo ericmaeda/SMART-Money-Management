@@ -1,4 +1,4 @@
 export interface DeleteCategoryDto {
     user_id: string;
-    budget_id: string;
+    category_id: string;
 }

@@ -13,7 +13,10 @@ export class CreateAccountUseCase {
 
     async execute(dto: CreateAccountDto): Promise<AccountPublicProps> {
         const entity = AccountEntity.create(
-            { user_id: dto.user_id, name: dto.name },
+            { 
+                user_id: dto.user_id, 
+                name: dto.name 
+            },
             createId(),
             new Date()
         );
