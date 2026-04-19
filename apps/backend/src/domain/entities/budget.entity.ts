@@ -1,8 +1,4 @@
-export enum BudgetStatus {
-    UNDER = 'UNDER',
-    WARNING = 'WARNING',
-    OVER = 'OVER'
-}
+import { BudgetStatus } from "generated/prisma";
 
 export interface CreateBudgetProps {
     user_id: string;

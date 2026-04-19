@@ -1,5 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ITransactionRepository, TRANSACTION_REPOSITORY } from "src/domain/repositories/transaction.repository.interface";
+import { CreateTransactionDto } from "../../dto/transaction/create-transaction.dto";
 
 @Injectable()
 export class CreateTransactionUseCase {
@@ -8,5 +9,7 @@ export class CreateTransactionUseCase {
         private readonly transactionRepo: ITransactionRepository
     ) {}
 
-    async execute() {}
+    async execute(dto: CreateTransactionDto) {
+        
+    }
 }
