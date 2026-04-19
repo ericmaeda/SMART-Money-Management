@@ -5,12 +5,14 @@ import { RegisterDto } from "../../dto/auth/register.dto";
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from "src/domain/entities/user.entity";
 import { hash } from "crypto";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class RegisterUseCase {
     constructor(
         @Inject(ACCOUNT_REPOSITORY)
-        private readonly userRepo: IUserRepository
+        private readonly userRepo: IUserRepository,
+        private readonly jwtService: JwtService
     ) {}
 
     async execute(dto: RegisterDto) {
@@ -33,6 +35,14 @@ export class RegisterUseCase {
 
         const saveUser = await this.userRepo.save(user);
 
-        return saveUser.toPublic();
+        const accessToken = this.jwtService.sign({
+            sub: saveUser.id,
+            email: saveUser.email
+        });
+
+        return {
+            user: saveUser.toPublic(),
+            accessToken,
+        };
     }
 }

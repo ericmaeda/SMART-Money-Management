@@ -1,4 +1,4 @@
-import { ForbiddenException, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { IUserRepository, USER_REPOSITORY } from "src/domain/repositories/user.repository.interface";
 import { LoginDto } from "../../dto/auth/login.dto";
 import * as bcrypt from 'bcrypt';
@@ -13,28 +13,26 @@ export class LoginUseCase {
     ) {}
 
     async execute(dto: LoginDto) {
-        const user = await this.userRepo.findByEmail(dto.email);
+        const user = await this.userRepo.findById(dto.email);
 
         if (!user) {
-            throw new NotFoundException(`User not found! Please do registration first`)
+            throw new UnauthorizedException(`Invalid credentials!`)
         }
 
-        const passwordValidity = await bcrypt.compare(dto.password, user.password);
+        const isPasswordValid = await bcrypt.compare(dto.password, user.password);
 
-        if (!passwordValidity) {
-            throw new ForbiddenException(`Username or password does not match!`)
+        if (!isPasswordValid) {
+            throw new UnauthorizedException(`Invalid credentials!`)
         }
 
-        const payload = {
-            sub: user.id, 
+        const accessToken = this.jwtService.sign({
+            sub: user.id,
             email: user.email
-        };
-
-        const accessToken = this.jwtService.sign(payload);
+        });
 
         return {
-            accessToken,
-            user: user.toPublic()
-        }
+            user: user.toPublic(),
+            accessToken
+        };
     }
 }
